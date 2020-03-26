@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from "react-redux";
 
-const Table = () => {
+
+const Table = (props) => {
     return (
         <>
             <table className="table">
@@ -16,9 +18,31 @@ const Table = () => {
 
                     </tr>
                 </thead>
+                <tbody>
+                    {props.jobList.map((ele, index) => (
+                        <tr key={index * index}>
+                            <td>{ele.companyName}</td>
+                            <td>{ele.place}</td>
+                            <td>{ele.jobTitle}</td>
+                            <td>{ele.jobQty}</td>
+                            <td>{ele.salary}</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </>
     )
 }
 
-export default Table
+const mapStateToProps = (state) => ({
+    jobList: state.jobList
+})
+
+// const mapDispatchToProps = {
+
+// }
+
+
+export default connect(mapStateToProps, null)(Table)

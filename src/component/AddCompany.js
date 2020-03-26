@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect, ReactReduxContext } from "react-redux";
+import { addCompany } from "../redux/action/actions";
 
-export class AddCompany extends Component {
+class AddCompany extends Component {
 
     constructor(props) {
         super(props);
@@ -11,12 +13,36 @@ export class AddCompany extends Component {
         }
     }
 
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleClick = () => {
+        console.log("Hello");
+        let company = {
+            companyName: this.state.companyName,
+            place: this.state.place
+        }
+
+
+        this.props.addCompany(company);
+        this.reset();
+    }
+
+    reset = () => {
+        this.setState({
+            companyName: "",
+            place: "",
+        })
+    }
 
     render() {
         return (
             <div className="container">
 
-                <form className="p-5 border my-5">
+                <div className="p-5 border my-5">
                     <h1 className="text-center">Add Company</h1>
                     <div className="form-group">
                         <label htmlFor="companyName">Company Name</label>
@@ -25,6 +51,7 @@ export class AddCompany extends Component {
                             className="form-control"
                             value={this.state.companyName}
                             onChange={this.handleChange}
+                            name="companyName"
                             id="companyName"
                         />
 
@@ -36,17 +63,33 @@ export class AddCompany extends Component {
                             className="form-control"
                             value={this.state.place}
                             onChange={this.handleChange}
+                            name="place"
                             id="location"
                         />
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                        <button
+                            className="btn btn-primary btn-lg"
+                            onClick={() => this.handleClick()}
+                        >Submit
+                        </button>
                     </div>
 
-                </form>
+                </div>
             </div>
         )
     }
 }
 
-export default AddCompany
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addCompany: (value) => dispatch(addCompany(value))
+    }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(AddCompany)
