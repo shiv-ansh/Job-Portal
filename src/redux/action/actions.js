@@ -11,3 +11,19 @@ export const addJob = (item) => {
         payload: item
     }
 }
+
+export const deleteJob = (payload) => {
+    return {
+        type: "DELETE_JOB",
+        payload
+    }
+}
+
+export const updateJob = (payload, id) => {
+
+    return {
+        type: "UPDATE_JOB",
+        payload,
+        id
+    }
+}

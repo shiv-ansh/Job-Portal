@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux";
-
+import { deleteJob } from "../redux/action/actions";
+import { Link } from "react-router-dom"
 
 const Table = (props) => {
     return (
@@ -20,14 +21,14 @@ const Table = (props) => {
                 </thead>
                 <tbody>
                     {props.jobList.map((ele, index) => (
-                        <tr key={index * index}>
+                        <tr key={index}>
                             <td>{ele.companyName}</td>
                             <td>{ele.place}</td>
                             <td>{ele.jobTitle}</td>
                             <td>{ele.jobQty}</td>
                             <td>{ele.salary}</td>
-                            <td>Edit</td>
-                            <td>Delete</td>
+                            <td><Link to={`/edit/${index}`} className="btn btn-success">Edit</Link></td>
+                            <td><button className="btn btn-danger" onClick={() => props.deleteJob(index)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>
@@ -40,9 +41,11 @@ const mapStateToProps = (state) => ({
     jobList: state.jobList
 })
 
-// const mapDispatchToProps = {
+const mapDispatchToProps = (Dispatch) => {
+    return {
+        deleteJob: (index) => Dispatch(deleteJob(index))
+    }
+}
 
-// }
 
-
-export default connect(mapStateToProps, null)(Table)
+export default connect(mapStateToProps, mapDispatchToProps)(Table)
