@@ -47,7 +47,7 @@ class Edit extends Component {
     }
 
     reset = () => {
-
+        alert("Job Updated");
         this.setState({
             companyName: "",
             place: "",
